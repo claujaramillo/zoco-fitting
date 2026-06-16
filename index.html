@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZOCO FITTING — Probador Virtual</title>
+  <meta name="description" content="Prueba tu look antes de comprar. Probador virtual de ropa impulsado por inteligencia artificial con Flux-Klein Virtual Try-On LoRA." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SIDEBAR IZQUIERDO — Branding + Navegación
+  ════════════════════════════════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Navegación principal">
+
+    <!-- Logo -->
+    <div class="sidebar__logo">
+      <img src="img/logo.png" alt="Zoco Fitting" class="sidebar__logo-img" />
+    </div>
+
+    <!-- Navegación -->
+    <nav class="sidebar__nav">
+      <a href="#" class="sidebar__nav-item sidebar__nav-item--active" id="nav-probar" aria-current="page">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>Probar</span>
+      </a>
+      <a href="#" class="sidebar__nav-item" id="nav-historial">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>Historial</span>
+      </a>
+      <a href="#" class="sidebar__nav-item" id="nav-favoritos">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        <span>Favoritos</span>
+      </a>
+      <a href="#" class="sidebar__nav-item" id="nav-ajustes">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span>Ajustes</span>
+      </a>
+    </nav>
+
+    <!-- AI Badge -->
+    <div class="sidebar__ai-badge">
+      <div class="sidebar__ai-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z"/>
+        </svg>
+      </div>
+      <div class="sidebar__ai-text">
+        <p class="sidebar__ai-title">Potenciado por IA</p>
+        <p class="sidebar__ai-desc">Probador virtual realista impulsado por Flux-Klein Virtual Try-On LoRA.</p>
+      </div>
+    </div>
+
+    <!-- Toggle tema -->
+    <div class="sidebar__theme">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" class="sidebar__theme-icon">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <button class="sidebar__theme-toggle" id="themeToggle" role="switch" aria-checked="false" aria-label="Activar modo oscuro">
+        <span class="sidebar__theme-knob"></span>
+      </button>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" class="sidebar__theme-icon">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </div>
+
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ÁREA CENTRAL — Preview principal
+  ════════════════════════════════════════════════════════════════ -->
+  <main class="main-area" id="main-area" role="main">
+
+    <!-- Header -->
+    <header class="main-area__header">
+      <div class="main-area__header-left">
+        <h1 class="main-area__title">Probador Virtual</h1>
+        <p class="main-area__subtitle">Prueba tu look antes de comprar.</p>
+      </div>
+      <button class="main-area__how-btn" id="howItWorksBtn" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        Cómo funciona
+      </button>
+    </header>
+
+    <!-- Canvas de preview -->
+    <div class="preview-wrapper">
+
+      <!-- Área de imagen principal -->
+      <div class="preview-canvas" id="previewCanvas">
+
+        <!-- Imagen del modelo (fija) -->
+        <img
+          src="img/caro2.jpg"
+          alt="Vista previa del modelo"
+          class="preview-image"
+          id="previewImage"
+          draggable="false"
+        />
+
+        <!-- Loader overlay -->
+        <div class="preview-loader" id="previewLoader" aria-live="polite" aria-busy="false" hidden>
+          <div class="preview-loader__inner">
+            <div class="preview-loader__spinner" aria-hidden="true">
+              <div class="preview-loader__ring"></div>
+              <div class="preview-loader__ring preview-loader__ring--delay"></div>
+            </div>
+            <p class="preview-loader__text">Generando tu look…</p>
+            <p class="preview-loader__sub">Esto puede tardar entre 20 y 60 segundos</p>
+          </div>
+        </div>
+
+        <!-- Error overlay -->
+        <div class="preview-error" id="previewError" hidden role="alert">
+          <div class="preview-error__inner">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <p class="preview-error__msg" id="previewErrorMsg">Error al generar la imagen</p>
+            <button class="preview-error__retry" id="retryBtn">Intentar de nuevo</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controles inferiores del canvas -->
+      <div class="preview-controls">
+        <div class="preview-controls__zoom">
+          <button class="preview-controls__btn" id="zoomOutBtn" aria-label="Reducir zoom" title="Alejar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button class="preview-controls__btn" id="zoomInBtn" aria-label="Aumentar zoom" title="Acercar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button class="preview-controls__btn" id="zoomResetBtn" aria-label="Restablecer zoom" title="Tamaño original">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <polyline points="15 3 21 3 21 9"/>
+              <polyline points="9 21 3 21 3 15"/>
+              <line x1="21" y1="3" x2="14" y2="10"/>
+              <line x1="3" y1="21" x2="10" y2="14"/>
+            </svg>
+          </button>
+        </div>
+
+        <button class="preview-controls__download" id="downloadBtn" disabled aria-label="Descargar imagen generada">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Descargar
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Footer del área central -->
+    <div class="main-area__footer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="main-area__footer-icon">
+        <path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z"/>
+      </svg>
+      <span id="footerMsg">Sube tus prendas para comenzar.</span>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PANEL DERECHO — Upload + Opciones + Botón generar
+  ════════════════════════════════════════════════════════════════ -->
+  <aside class="right-panel" id="rightPanel" aria-label="Panel de carga de imágenes">
+
+    <!-- 1. Sube tus prendas -->
+    <section class="panel-section" aria-labelledby="garments-title">
+      <h2 class="panel-section__title" id="garments-title">1. Sube tus prendas</h2>
+
+      <!-- Parte superior -->
+      <div class="upload-card" id="topCard">
+        <div class="upload-card__preview" id="topPreview">
+          <img src="" alt="Prenda superior" class="upload-card__thumb" id="topThumb" style="display:none" />
+          <span class="upload-card__placeholder-text" id="topPlaceholder">TOP</span>
+        </div>
+        <div class="upload-card__info">
+          <div class="upload-card__header">
+            <div>
+              <p class="upload-card__label">Parte superior</p>
+              <p class="upload-card__sublabel">Camiseta / Top</p>
+            </div>
+            <div class="upload-card__check" id="topCheck" aria-label="Prenda superior cargada">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+          </div>
+          <div
+            class="upload-drop-zone"
+            id="topDropZone"
+            role="button"
+            tabindex="0"
+            aria-label="Arrastra y suelta o haz clic para subir prenda superior"
+            data-target="top"
+          >
+            <input type="file" accept="image/*" class="upload-drop-zone__input" id="topInput" aria-hidden="true" />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <span>Arrastra y suelta o haz clic para subir</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parte inferior -->
+      <div class="upload-card" id="bottomCard">
+        <div class="upload-card__preview" id="bottomPreview">
+          <img src="" alt="Prenda inferior" class="upload-card__thumb" id="bottomThumb" style="display:none" />
+          <span class="upload-card__placeholder-text" id="bottomPlaceholder">BOTTOM</span>
+        </div>
+        <div class="upload-card__info">
+          <div class="upload-card__header">
+            <div>
+              <p class="upload-card__label">Parte inferior</p>
+              <p class="upload-card__sublabel">Pantalón / Jeans</p>
+            </div>
+            <div class="upload-card__check" id="bottomCheck" aria-label="Prenda inferior cargada">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+          </div>
+          <div
+            class="upload-drop-zone"
+            id="bottomDropZone"
+            role="button"
+            tabindex="0"
+            aria-label="Arrastra y suelta o haz clic para subir prenda inferior"
+            data-target="bottom"
+          >
+            <input type="file" accept="image/*" class="upload-drop-zone__input" id="bottomInput" aria-hidden="true" />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <span>Arrastra y suelta o haz clic para subir</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 2. GENERAR LOOK -->
+    <div class="panel-generate">
+      <button
+        class="generate-btn"
+        id="generateBtn"
+        aria-label="Generar look virtual"
+        disabled
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="generate-btn__icon" aria-hidden="true">
+          <path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z"/>
+        </svg>
+        <span>Generar Prueba</span>
+      </button>
+      <p class="panel-generate__hint">La IA reemplazará el atuendo y generará tu look.</p>
+    </div>
+
+  </aside>
+
+  <!-- Modal: Cómo funciona -->
+  <div class="modal-overlay" id="modalOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <button class="modal__close" id="modalClose" aria-label="Cerrar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <h2 id="modalTitle">¿Cómo funciona ZOCO FITTING?</h2>
+      <ol class="modal__steps">
+        <li>
+          <strong>Sube tu modelo</strong>
+          <p>Selecciona una foto de cuerpo completo con buena iluminación.</p>
+        </li>
+        <li>
+          <strong>Elige tus prendas</strong>
+          <p>Sube la imagen de la prenda superior (camiseta, top, camisa) y la inferior (jean, pantalón, falda).</p>
+        </li>
+        <li>
+          <strong>Genera tu look</strong>
+          <p>Haz clic en "Generar Prueba" y la IA creará una imagen realista vistiendo las prendas seleccionadas.</p>
+        </li>
+        <li>
+          <strong>Descarga tu resultado</strong>
+          <p>Si te gusta el look, descárgalo con el botón "Descargar".</p>
+        </li>
+      </ol>
+      <p class="modal__tech">Potenciado por <strong>Flux-Klein 9B Virtual Try-On LoRA</strong> vía Fal.ai.</p>
+    </div>
+  </div>
+
+  <!-- Toast de notificaciones -->
+  <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

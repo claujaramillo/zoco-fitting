@@ -1,0 +1,37 @@
+=========================================================
+PROMPTS Y CONFIGURACIÓN USADOS EN "ZOCO FITTING"
+=========================================================
+
+1. PROMPT DE GENERACIÓN DE IMAGEN (Fal.ai + Flux + LoRA)
+---------------------------------------------------------
+El siguiente texto es el "prompt" exacto enviado al modelo de Inteligencia Artificial para generar el reemplazo de la ropa de forma hiperrealista:
+
+"TRYON. Replace the outfit with the top tee and the bottom pant as shown in the reference images. The final image is a full body shot"
+
+2. MODELO E INFERENCIA (Motor de IA)
+---------------------------------------------------------
+- API Endpoint: https://queue.fal.run/fal-ai/flux-2-klein/9b/edit/lora
+- Pasos de Inferencia (num_inference_steps): 8 (Máximo permitido por el modelo)
+- LoRA utilizado: flux-klein-tryon.safetensors
+- URL del LoRA: https://huggingface.co/fal/flux-klein-9b-virtual-tryon-lora/resolve/main/flux-klein-tryon.safetensors
+- Scale del LoRA: 1.0
+
+3. ESTRUCTURA DE LA PETICIÓN AL SERVIDOR (Payload)
+---------------------------------------------------------
+El modelo específico de Try-On de Klein requiere que se pasen TODAS las imágenes de referencia concatenadas en un array llamado "image_urls", en el siguiente orden:
+1. Imagen de la persona (Modelo)
+2. Imagen de la prenda superior (Top)
+3. Imagen de la prenda inferior (Bottom)
+
+4. RESUMEN DE PROMPTS DE CONSTRUCCIÓN (Chat del Sistema)
+---------------------------------------------------------
+Instrucción inicial para crear la aplicación:
+"Quiero construir una web app local llamada 'ZOCO FITTING', un probador virtual de ropa utilizando la API de Fal.ai como motor de inferencia. La aplicación debe permitir: subir una imagen de una persona, una prenda superior y una prenda inferior. La interfaz tendrá tres zonas drag & drop independientes. Al hacer clic en 'GENERAR LOOK', se enviará la solicitud al endpoint de flux-2-klein."
+
+Instrucciones de refinamiento visual y funcional:
+"Quiero que solo baste subir las imagenes de arriba y abajo, no la del modelo. Que el modelo sea siempre el mismo (img/caro2.jpg). Quita el menú 'Cuerpo completo' que no despliega nada. Quita la palabra 'fitting' debajo del logo y quita la sección '3 opciones'."
+
+Solución del problema de inferencia (El prompt clave que solucionó el bug):
+"intentemos con algo de esto que tal vez pueda servir para la api de fai: https://huggingface.co/fal/flux-klein-9b-virtual-tryon-lora/resolve/main/flux-klein-tryon.safetensors
+fal.ai/models/fal-ai/flux-2-klein/9b/edit/lora
+TRYON. Replace the outfit with the top tee and the bottom pant as shown in the reference images. The final image is a full body shot"
