@@ -248,9 +248,14 @@ app.get('/api/download', async (req, res) => {
   }
 });
 
-// ─── Iniciar servidor ─────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`\n🚀 ZOCO FITTING Server corriendo en http://localhost:${PORT}`);
-  console.log(`🔑 FAL_KEY: ${process.env.FAL_KEY ? '✅ Cargada' : '❌ NO encontrada'}`);
-  console.log(`📂 Sirviendo archivos desde: ${__dirname}\n`);
-});
+// ─── Iniciar servidor (o exportar para Vercel) ─────────────────────────────────
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 ZOCO FITTING Server corriendo en http://localhost:${PORT}`);
+    console.log(`🔑 FAL_KEY: ${process.env.FAL_KEY ? '✅ Cargada' : '❌ NO encontrada'}`);
+    console.log(`📂 Sirviendo archivos desde: ${__dirname}\n`);
+  });
+}
+
+// Exportar la aplicación para que Vercel la trate como Serverless Function
+module.exports = app;
